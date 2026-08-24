@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlayStation Hub</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 10px 0 5px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #94a3b8;
+      margin-bottom: 25px;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .main-card {
+      background: #1e293b;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+
+    .main-card-title {
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .main-card-price {
+      color: #94a3b8;
+      margin-top: 7px;
+    }
+
+    .back {
+      background: #334155;
+      border: 0;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      font-size: 15px;
+    }
+
+    .region {
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .region-title {
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    .region-subtitle {
+      color: #94a3b8;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+
+    .products {
+      display: none;
+      margin-top: 15px;
+    }
+
+    .product {
+      background: #334155;
+      border-radius: 13px;
+      padding: 14px;
+      margin-top: 10px;
+    }
+
+    .product-title {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .old-price {
+      color: #94a3b8;
+      text-decoration: line-through;
+      margin-top: 7px;
+    }
+
+    .new-price {
+      font-size: 21px;
+      font-weight: bold;
+      margin-top: 3px;
+    }
+
+    .discount {
+      display: inline-block;
+      margin-top: 7px;
+      background: #166534;
+      color: #bbf7d0;
+      padding: 5px 8px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .buy {
+      width: 100%;
+      margin-top: 12px;
+      padding: 13px;
+      border: none;
+      border-radius: 11px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .plus-box {
+      background: #1e293b;
+      border-radius: 18px;
+      padding: 22px;
+      text-align: center;
+    }
+
+    .plus-price {
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🎮 PlayStation Hub</h1>
+  <div class="subtitle">Игры, подписки и подарочные карты</div>
+
+  <!-- ГЛАВНАЯ -->
+  <div id="home" class="screen active">
+
+    <div class="main-card" onclick="openScreen('giftcards')">
+      <div class="main-card-title">🎁 Подарочные карты</div>
+      <div class="main-card-price">От 85 ₽</div>
+    </div>
+
+    <div class="main-card" onclick="openScreen('plus')">
+      <div class="main-card-title">⭐ PlayStation Plus</div>
+      <div class="main-card-price">От 800 ₽</div>
+    </div>
+
+  </div>
+
+
+  <!-- ПОДАРОЧНЫЕ КАРТЫ -->
+  <div id="giftcards" class="screen">
+
+    <button class="back" onclick="openScreen('home')">← Назад</button>
+
+    <h2>🎁 Подарочные карты</h2>
+    <div class="subtitle">Выберите регион</div>
+
+
+    <!-- ТУРЦИЯ -->
+    <div class="region" onclick="toggle('turkey')">
+      <div class="region-title">🇹🇷 Турция</div>
+      <div class="region-subtitle">Турецкие лиры</div>
+
+      <div class="products" id="turkey">
+
+        <div class="product">
+          <div class="product-title">250 лир</div>
+          <div class="new-price">550 ₽</div>
+          <button class="buy" onclick="buy(event,'Турция — 250 лир',550)">Купить</button>
+        </div>
+
+        <div class="product">
+          <div class="product-title">500 лир</div>
+          <div class="old-price">1 100 ₽</div>
+          <div class="new-price">1 000 ₽</div>
+          <div class="discount">−9%</div>
+          <button class="buy" onclick="buy(event,'Турция — 500 лир',1000)">Купить</button>
+        </div>
+
+        <div class="product">
+          <div class="product-title">750 лир</div>
+          <div class="old-price">1 650 ₽</div>
+          <div class="new-price">1 550 ₽</div>
+          <div class="discount">−6%</div>
+          <button class="buy" onclick="buy(event,'Турция — 750 лир',1550)">Купить</button>
+        </div>
+
+        <div class="product">
+          <div class="product-title">1 000 лир</div>
+          <div class="old-price">2 200 ₽</div>
+          <div class="new-price">2 000 ₽</div>
+          <div class="discount">−9%</div>
+          <button class="buy" onclick="buy(event,'Турция — 1000 лир',2000)">Купить</button>
+        </div>
+
+        <div class="product">
+          <div class="product-title">1 500 лир</div>
+          <div class="old-price">3 300 ₽</div>
+          <div class="new-price">2 900 ₽</div>
+          <div class="discount">−12%</div>
+          <button class="buy" onclick="buy(event,'Турция — 1500 лир',2900)">Купить</button>
+        </div>
+
+        <div class="product">
+          <div class="product-title">2 000 лир</div>
+          <div class="old-price">4 400 ₽</div>
+          <div class="new-price">4 000 ₽</div>
+          <div class="discount">−9%</div>
+          <button class="buy" onclick="buy(event,'Турция — 2000 лир',4000)">Купить</button>
+        </div>
+
+        <div class="product">
+          <div class="product-title">2 500 лир</div>
+          <div class="old-price">5 500 ₽</div>
+          <div class="new-price">5 000 ₽</div>
+          <div class="discount">−9%</div>
+          <button class="buy" onclick="buy(event,'Турция — 2500 лир',5000)">Купить</button>
+        </div>
+
+        <div class="product">
+          <div class="product-title">3 000 лир</div>
+          <div class="old-price">6 600 ₽</div>
+          <div class="new-price">6 000 ₽</div>
+          <div class="discount">−9%</div>
+          <button class="buy" onclick="buy(event,'Турция — 3000 лир',6000)">Купить</button>
+        </div>
+
+        <div class="product">
+          <div class="product-title">3 500 лир</div>
+          <div class="old-price">7 700 ₽</div>
+          <div class="new-price">7 000 ₽</div>
+          <div class="discount">−9%</div>
+          <button class="buy" onclick="buy(event,'Турция — 3500 лир',7000)">Купить</button>
+        </div>
+
+        <div class="product">
+          <div class="product-title">4 000 лир</div>
+          <div class="old-price">8 800 ₽</div>
+          <div class="new-price">8 000 ₽</div>
+          <div class="discount">−9%</div>
+          <button class="buy" onclick="buy(event,'Турция — 4000 лир',8000)">Купить</button>
+        </div>
+
+        <div class="product">
+          <div class="product-title">4 500 лир</div>
+          <div class="old-price">9 900 ₽</div>
+          <div class="new-price">9 000 ₽</div>
+          <div class="discount">−9%</div>
+          <button class="buy" onclick="buy(event,'Турция — 4500 лир',9000)">Купить</button>
+        </div>
+
+        <div class="product">
+          <div class="product-title">5 000 лир</div>
+          <div class="old-price">11 000 ₽</div>
+          <div class="new-price">10 000 ₽</div>
+          <div class="discount">−9%</div>
+          <button class="buy" onclick="buy(event,'Турция — 5000 лир',10000)">Купить</button>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- США -->
+    <div class="region" onclick="toggle('usa')">
+      <div class="region-title">🇺🇸 США</div>
+      <div class="region-subtitle">Доллары</div>
+
+      <div class="products" id="usa">
+
+        <div class="product">
+          <div class="product-title">$1</div>
+          <div class="old-price">95 ₽</div>
+          <div class="new-price">85 ₽</div>
+          <div class="discount">−11%</div>
+          <button class="buy" onclick="buy(event,'США — $1',85)">Купить</button>
+        </div>
+
+        <div class="product"><div class="product-title">$5</div><div class="new-price">475 ₽</div><button class="buy" onclick="buy(event,'США — $5',475)">Купить</button></div>
+        <div class="product"><div class="product-title">$10</div><div class="new-price">950 ₽</div><button class="buy" onclick="buy(event,'США — $10',950)">Купить</button></div>
+        <div class="product"><div class="product-title">$20</div><div class="new-price">1 900 ₽</div><button class="buy" onclick="buy(event,'США — $20',1900)">Купить</button></div>
+        <div class="product"><div class="product-title">$25</div><div class="new-price">2 375 ₽</div><button class="buy" onclick="buy(event,'США — $25',2375)">Купить</button></div>
+        <div class="product"><div class="product-title">$30</div><div class="new-price">2 850 ₽</div><button class="buy" onclick="buy(event,'США — $30',2850)">Купить</button></div>
+        <div class="product"><div class="product-title">$40</div><div class="new-price">3 800 ₽</div><button class="buy" onclick="buy(event,'США — $40',3800)">Купить</button></div>
+        <div class="product"><div class="product-title">$50</div><div class="new-price">4 750 ₽</div><button class="buy" onclick="buy(event,'США — $50',4750)">Купить</button></div>
+        <div class="product"><div class="product-title">$75</div><div class="new-price">7 125 ₽</div><button class="buy" onclick="buy(event,'США — $75',7125)">Купить</button></div>
+        <div class="product"><div class="product-title">$100</div><div class="new-price">9 500 ₽</div><button class="buy" onclick="buy(event,'США — $100',9500)">Купить</button></div>
+
+      </div>
+    </div>
+
+
+    <!-- ИНДИЯ -->
+    <div class="region" onclick="toggle('india')">
+      <div class="region-title">🇮🇳 Индия</div>
+      <div class="region-subtitle">Рупии</div>
+
+      <div class="products" id="india">
+
+        <div class="product"><div class="product-title">1 000 рупий</div><div class="old-price">1 200 ₽</div><div class="new-price">1 105 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Индия — 1000 рупий',1105)">Купить</button></div>
+        <div class="product"><div class="product-title">2 000 рупий</div><div class="old-price">2 400 ₽</div><div class="new-price">2 210 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Индия — 2000 рупий',2210)">Купить</button></div>
+        <div class="product"><div class="product-title">3 000 рупий</div><div class="old-price">3 600 ₽</div><div class="new-price">3 315 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Индия — 3000 рупий',3315)">Купить</button></div>
+        <div class="product"><div class="product-title">4 000 рупий</div><div class="old-price">4 800 ₽</div><div class="new-price">4 420 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Индия — 4000 рупий',4420)">Купить</button></div>
+        <div class="product"><div class="product-title">5 000 рупий</div><div class="old-price">6 000 ₽</div><div class="new-price">5 525 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Индия — 5000 рупий',5525)">Купить</button></div>
+        <div class="product"><div class="product-title">6 000 рупий</div><div class="old-price">7 200 ₽</div><div class="new-price">6 630 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Индия — 6000 рупий',6630)">Купить</button></div>
+        <div class="product"><div class="product-title">7 000 рупий</div><div class="old-price">8 400 ₽</div><div class="new-price">7 735 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Индия — 7000 рупий',7735)">Купить</button></div>
+        <div class="product"><div class="product-title">8 000 рупий</div><div class="old-price">9 600 ₽</div><div class="new-price">8 840 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Индия — 8000 рупий',8840)">Купить</button></div>
+
+      </div>
+    </div>
+
+
+    <!-- ПОЛЬША -->
+    <div class="region" onclick="toggle('poland')">
+      <div class="region-title">🇵🇱 Польша</div>
+      <div class="region-subtitle">Злотые</div>
+
+      <div class="products" id="poland">
+
+        <div class="product"><div class="product-title">50 zł</div><div class="old-price">1 250 ₽</div><div class="new-price">1 150 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 50 zł',1150)">Купить</button></div>
+        <div class="product"><div class="product-title">100 zł</div><div class="old-price">2 500 ₽</div><div class="new-price">2 300 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 100 zł',2300)">Купить</button></div>
+        <div class="product"><div class="product-title">150 zł</div><div class="old-price">3 750 ₽</div><div class="new-price">3 450 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 150 zł',3450)">Купить</button></div>
+        <div class="product"><div class="product-title">200 zł</div><div class="old-price">5 000 ₽</div><div class="new-price">4 600 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 200 zł',4600)">Купить</button></div>
+        <div class="product"><div class="product-title">250 zł</div><div class="old-price">6 250 ₽</div><div class="new-price">5 750 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 250 zł',5750)">Купить</button></div>
+        <div class="product"><div class="product-title">300 zł</div><div class="old-price">7 500 ₽</div><div class="new-price">6 900 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 300 zł',6900)">Купить</button></div>
+        <div class="product"><div class="product-title">350 zł</div><div class="old-price">8 750 ₽</div><div class="new-price">8 050 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 350 zł',8050)">Купить</button></div>
+        <div class="product"><div class="product-title">400 zł</div><div class="old-price">10 000 ₽</div><div class="new-price">9 200 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 400 zł',9200)">Купить</button></div>
+        <div class="product"><div class="product-title">450 zł</div><div class="old-price">11 250 ₽</div><div class="new-price">10 350 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 450 zł',10350)">Купить</button></div>
+        <div class="product"><div class="product-title">500 zł</div><div class="old-price">12 500 ₽</div><div class="new-price">11 500 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 500 zł',11500)">Купить</button></div>
+        <div class="product"><div class="product-title">550 zł</div><div class="old-price">13 750 ₽</div><div class="new-price">12 650 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 550 zł',12650)">Купить</button></div>
+        <div class="product"><div class="product-title">600 zł</div><div class="old-price">15 000 ₽</div><div class="new-price">13 800 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 600 zł',13800)">Купить</button></div>
+        <div class="product"><div class="product-title">650 zł</div><div class="old-price">16 250 ₽</div><div class="new-price">14 950 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 650 zł',14950)">Купить</button></div>
+        <div class="product"><div class="product-title">700 zł</div><div class="old-price">17 500 ₽</div><div class="new-price">16 100 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 700 zł',16100)">Купить</button></div>
+        <div class="product"><div class="product-title">750 zł</div><div class="old-price">18 750 ₽</div><div class="new-price">17 250 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 750 zł',17250)">Купить</button></div>
+        <div class="product"><div class="product-title">800 zł</div><div class="old-price">20 000 ₽</div><div class="new-price">18 400 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 800 zł',18400)">Купить</button></div>
+        <div class="product"><div class="product-title">850 zł</div><div class="old-price">21 250 ₽</div><div class="new-price">19 550 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 850 zł',19550)">Купить</button></div>
+        <div class="product"><div class="product-title">900 zł</div><div class="old-price">22 500 ₽</div><div class="new-price">20 700 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 900 zł',20700)">Купить</button></div>
+        <div class="product"><div class="product-title">950 zł</div><div class="old-price">23 750 ₽</div><div class="new-price">21 850 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 950 zł',21850)">Купить</button></div>
+        <div class="product"><div class="product-title">1 000 zł</div><div class="old-price">25 000 ₽</div><div class="new-price">23 000 ₽</div><div class="discount">−8%</div><button class="buy" onclick="buy(event,'Польша — 1000 zł',23000)">Купить</button></div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- PLAYSTATION PLUS -->
+  <div id="plus" class="screen">
+
+    <button class="back" onclick="openScreen('home')">← Назад</button>
+
+    <div class="plus-box">
+      <h2>⭐ PlayStation Plus</h2>
+
+      <div class="plus-price">От 800 ₽</div>
+
+      <p style="color:#94a3b8;">
+        Тарифы и сроки подписки добавим следующим этапом.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  function openScreen(id) {
+    document.querySelectorAll('.screen').forEach(screen => {
+      screen.classList.remove('active');
+    });
+
+    document.getElementById(id).classList.add('active');
+
+    window.scrollTo(0, 0);
+  }
+
+
+  function toggle(id) {
+    const element = document.getElementById(id);
+
+    if (element.style.display === "block") {
+      element.style.display = "none";
+    } else {
+      element.style.display = "block";
+    }
+  }
+
+
+  function buy(event, product, price) {
+    event.stopPropagation();
+
+    alert(
+      "Заказ\n\n" +
+      product +
+      "\nЦена: " +
+      price.toLocaleString("ru-RU") +
+      " ₽\n\n" +
+      "Оплата будет подключена следующим этапом."
+    );
+  }
+
+</script>
+
+</body>
+</html>
