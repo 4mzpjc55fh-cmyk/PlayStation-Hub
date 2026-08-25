@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PlayStation Hub</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    background:#05070d;
+    color:#fff;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+.app{
+    max-width:680px;
+    margin:auto;
+    padding:15px;
+    min-height:100vh;
+}
+/* HEADER */
+.header{
+    position:relative;
+    overflow:hidden;
+    min-height:245px;
+    border-radius:28px;
+    padding:27px;
+    background:
+      radial-gradient(circle at 85% 25%,rgba(30,120,255,.45),transparent 32%),
+      linear-gradient(135deg,#102c61,#07101e 65%,#050810);
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+    margin-bottom:15px;
+}
+.header:before{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    right:-90px;
+    bottom:-120px;
+    border-radius:50%;
+    background:#147cff;
+    opacity:.18;
+    filter:blur(35px);
+}
+.header-content{position:relative;z-index:2}
+.ps{
+    font-size:45px;
+    font-weight:950;
+    letter-spacing:-4px;
+    margin-bottom:12px;
+}
+.header h1{
+    font-size:37px;
+    line-height:1;
+    margin-bottom:10px;
+}
+.header p{
+    color:#b8c6dd;
+    font-size:14px;
+}
+/* DISCOUNT */
+.discount{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:17px 19px;
+    border-radius:21px;
+    margin-bottom:14px;
+    background:linear-gradient(135deg,#155dff,#5730ff);
+    box-shadow:0 12px 35px rgba(40,70,255,.25);
+}
+.discount strong{font-size:18px}
+.discount small{
+    display:block;
+    margin-top:4px;
+    color:#dbe4ff;
+}
+.discount span{
+    font-size:31px;
+    font-weight:950;
+}
+/* MAIN NAV */
+.main-nav{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:18px;
+}
+.main-nav button{
+    border:1px solid rgba(255,255,255,.07);
+    background:#111722;
+    color:#909caf;
+    border-radius:18px;
+    padding:17px 8px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.2s;
+}
+.main-nav button.active{
+    background:linear-gradient(135deg,#087cff,#0752d4);
+    color:white;
+    box-shadow:0 8px 28px rgba(0,110,255,.25);
+}
+/* SCREEN */
+.screen{display:none}
+.screen.active{display:block}
+/* TOP BAR */
+.section-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:10px 1px 13px;
+}
+.section-top h2{font-size:24px}
+.info-btn{
+    border:0;
+    background:#111722;
+    color:#8fb8ff;
+    padding:9px 11px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:800;
+    cursor:pointer;
+}
+/* OFFICIAL-STYLE VISUAL */
+.visual{
+    position:relative;
+    overflow:hidden;
+    height:190px;
+    border-radius:25px;
+    margin-bottom:14px;
+    background:
+      radial-gradient(circle at 75% 30%,rgba(42,110,255,.65),transparent 30%),
+      linear-gradient(135deg,#071d51,#101827 55%,#080b12);
+}
+.visual.plus{
+    background:
+      radial-gradient(circle at 75% 35%,rgba(30,90,255,.7),transparent 30%),
+      linear-gradient(135deg,#061b50,#111827);
+}
+.visual.gift{
+    background:
+      radial-gradient(circle at 75% 35%,rgba(50,130,255,.55),transparent 30%),
+      linear-gradient(135deg,#09245c,#111827);
+}
+.visual-title{
+    position:absolute;
+    left:22px;
+    bottom:20px;
+    z-index:2;
+}
+.visual-title small{
+    color:#b6c7e7;
+    font-weight:700;
+}
+.visual-title strong{
+    display:block;
+    font-size:30px;
+    margin-top:3px;
+}
+.visual-symbol{
+    position:absolute;
+    right:25px;
+    top:25px;
+    font-size:88px;
+    font-weight:950;
+    opacity:.92;
+    text-shadow:0 0 35px rgba(50,130,255,.8);
+}
+/* REGIONS */
+.subtitle{
+    color:#7e899c;
+    font-size:13px;
+    margin-bottom:12px;
+}
+.regions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+.region{
+    padding:17px;
+    min-height:145px;
+    border-radius:21px;
+    background:linear-gradient(145deg,#121925,#090d14);
+    border:1px solid rgba(255,255,255,.06);
+    cursor:pointer;
+    transition:.18s;
+}
+.region:hover{
+    border-color:#287eff;
+}
+.region:active{
+    transform:scale(.97);
+}
+.flag{
+    font-size:37px;
+    margin-bottom:9px;
+}
+.region h3{font-size:17px}
+.region p{
+    color:#7f8a9d;
+    font-size:12px;
+    margin-top:4px;
+}
+.from{
+    color:#68a5ff;
+    font-size:13px;
+    font-weight:900;
+    margin-top:10px;
+}
+.soon{
+    margin-top:11px;
+    text-align:center;
+    padding:18px;
+    border-radius:20px;
+    background:#0d121b;
+    border:1px dashed #3a4557;
+    color:#8c97a9;
+}
+.soon strong{
+    display:block;
+    color:white;
+    margin-bottom:4px;
+}
+/* PLANS */
+.plan-tabs{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin-bottom:12px;
+}
+.plan-tabs button{
+    border:1px solid rgba(255,255,255,.07);
+    background:#101620;
+    color:#8d98ab;
+    padding:14px 5px;
+    border-radius:15px;
+    font-weight:900;
+    cursor:pointer;
+}
+.plan-tabs button.active{
+    background:#126fff;
+    color:white;
+}
+.term-card{
+    padding:17px;
+    margin-bottom:10px;
+    border-radius:20px;
+    background:#101620;
+    border:1px solid rgba(255,255,255,.06);
+}
+.term-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px 0;
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+.term-row:last-child{border-bottom:0}
+.term{
+    color:#adb8ca;
+}
+.price{text-align:right}
+.old{
+    color:#687386;
+    text-decoration:line-through;
+    font-size:12px;
+}
+.sale{
+    color:#ff6677;
+    font-size:11px;
+    font-weight:900;
+    margin-left:4px;
+}
+.new{
+    display:block;
+    color:white;
+    font-size:17px;
+    font-weight:950;
+    margin-top:3px;
+}
+.buy{
+    width:100%;
+    border:0;
+    background:#147cff;
+    color:white;
+    padding:13px;
+    border-radius:13px;
+    margin-top:9px;
+    font-weight:900;
+    cursor:pointer;
+}
+/* ORDER */
+.order{
+    display:none;
+}
+.order.active{display:block}
+.back{
+    border:0;
+    background:#111722;
+    color:white;
+    padding:10px 14px;
+    border-radius:12px;
+    font-weight:800;
+    margin-bottom:12px;
+    cursor:pointer;
+}
+.order-image{
+    height:190px;
+    border-radius:24px;
+    background:
+      radial-gradient(circle at 75% 30%,rgba(30,115,255,.6),transparent 32%),
+      linear-gradient(135deg,#071b4d,#0d1420);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:82px;
+    font-weight:950;
+    text-shadow:0 0 35px #177cff;
+    margin-bottom:14px;
+}
+.order-box{
+    padding:20px;
+    border-radius:22px;
+    background:#101620;
+    border:1px solid rgba(255,255,255,.06);
+}
+.order-box h2{margin-bottom:7px}
+.order-box p{
+    color:#98a4b7;
+    font-size:14px;
+    line-height:1.55;
+}
+.guarantee{
+    margin-top:15px;
+    padding:15px;
+    border-radius:16px;
+    background:rgba(20,124,255,.09);
+    border:1px solid rgba(20,124,255,.18);
+}
+.guarantee strong{
+    display:block;
+    margin-bottom:5px;
+}
+.instruction{
+    margin-top:14px;
+    padding:15px;
+    border-radius:16px;
+    background:#0b1018;
+}
+.instruction strong{
+    display:block;
+    margin-bottom:7px;
+}
+.safe{
+    margin-top:14px;
+    padding:14px;
+    border-radius:15px;
+    background:rgba(255,190,50,.06);
+    border:1px solid rgba(255,190,50,.12);
+    color:#c5cbd6;
+    font-size:13px;
+    line-height:1.5;
+}
+/* MODAL */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(10px);
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:100;
+}
+.modal.active{display:flex}
+.modal-box{
+    width:min(680px,100%);
+    background:#111722;
+    border-radius:28px 28px 0 0;
+    padding:24px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+.modal-box h2{
+    margin-bottom:10px;
+}
+.modal-box p{
+    color:#a1acbd;
+    line-height:1.6;
+    font-size:14px;
+}
+.close{
+    width:100%;
+    border:0;
+    background:#147cff;
+    color:#fff;
+    padding:14px;
+    border-radius:14px;
+    margin-top:18px;
+    font-weight:900;
+}
+/* FOOTER */
+.footer{
+    text-align:center;
+    color:#596476;
+    font-size:11px;
+    margin:35px 0 10px;
+}
+@media(max-width:430px){
+    .header h1{font-size:32px}
+    .visual{height:175px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="header">
+    <div class="header-content">
+        <div class="ps">PS</div>
+        <h1>PlayStation Hub</h1>
+        <p>Подарочные карты и PlayStation Plus</p>
+    </div>
+</header>
+<div class="discount">
+    <div>
+        <strong>🔥 Скидка на всё</strong>
+        <small>Подарочные карты и PS Plus</small>
+    </div>
+    <span>−10%</span>
+</div>
+<nav class="main-nav">
+    <button id="plusNav" class="active" onclick="showMain('plus')">
+        ⭐ PS Plus
+    </button>
+    <button id="giftNav" onclick="showMain('gifts')">
+        🎁 Подарочные карты
+    </button>
+</nav>
+<!-- PS PLUS -->
+<section id="plusScreen" class="screen active">
+    <div class="section-top">
+        <h2>⭐ PS Plus</h2>
+        <button class="info-btn"
+                onclick="openInfo('plus')">
+            Зачем нужна?
+        </button>
+    </div>
+    <div class="visual plus">
+        <div class="visual-title">
+            <small>PLAYSTATION</small>
+            <strong>PlayStation Plus</strong>
+        </div>
+        <div class="visual-symbol">+</div>
+    </div>
+    <div class="subtitle">Выберите регион</div>
+    <div class="regions">
+        <div class="region"
+             onclick="openPlans('🇹🇷 Турция','1000')">
+            <div class="flag">🇹🇷</div>
+            <h3>Турция</h3>
+            <p>PlayStation Plus</p>
+            <div class="from">от 1 000 ₽</div>
+        </div>
+        <div class="region"
+             onclick="openPlans('🇵🇱 Польша','1580')">
+            <div class="flag">🇵🇱</div>
+            <h3>Польша</h3>
+            <p>PlayStation Plus</p>
+            <div class="from">от 1 580 ₽</div>
+        </div>
+        <div class="region"
+             onclick="openPlans('🇺🇸 США','1100')">
+            <div class="flag">🇺🇸</div>
+            <h3>США</h3>
+            <p>PlayStation Plus</p>
+            <div class="from">от 1 100 ₽</div>
+        </div>
+        <div class="region"
+             onclick="openPlans('🇮🇳 Индия','1100')">
+            <div class="flag">🇮🇳</div>
+            <h3>Индия</h3>
+            <p>PlayStation Plus</p>
+            <div class="from">от 1 100 ₽</div>
+        </div>
+    </div>
+    <div class="soon">
+        <strong>🇺🇦 Украина</strong>
+        Будет скоро
+    </div>
+</section>
+<!-- GIFTS -->
+<section id="giftsScreen" class="screen">
+    <div class="section-top">
+        <h2>🎁 Подарочные карты</h2>
+        <button class="info-btn"
+                onclick="openInfo('gift')">
+            Зачем нужна?
+        </button>
+    </div>
+    <div class="visual gift">
+        <div class="visual-title">
+            <small>PLAYSTATION STORE</small>
+            <strong>Gift Cards</strong>
+        </div>
+        <div class="visual-symbol">🎁</div>
+    </div>
+    <div class="subtitle">Выберите регион</div>
+    <div class="regions">
+        <div class="region"
+             onclick="openGift('🇹🇷 Турция')">
+            <div class="flag">🇹🇷</div>
+            <h3>Турция</h3>
+            <p>PlayStation Store</p>
+            <div class="from">от 550 ₽</div>
+        </div>
+        <div class="region"
+             onclick="openGift('🇵🇱 Польша')">
+            <div class="flag">🇵🇱</div>
+            <h3>Польша</h3>
+            <p>PlayStation Store</p>
+            <div class="from">от 1 150 ₽</div>
+        </div>
+        <div class="region"
+             onclick="openGift('🇺🇸 США')">
+            <div class="flag">🇺🇸</div>
+            <h3>США</h3>
+            <p>PlayStation Store</p>
+            <div class="from">от 85 ₽</div>
+        </div>
+        <div class="region"
+             onclick="openGift('🇮🇳 Индия')">
+            <div class="flag">🇮🇳</div>
+            <h3>Индия</h3>
+            <p>PlayStation Store</p>
+            <div class="from">от 1 105 ₽</div>
+        </div>
+    </div>
+    <div class="soon">
+        <strong>🇺🇦 Украина</strong>
+        Будет скоро
+    </div>
+</section>
+<!-- PLANS -->
+<section id="plansScreen" class="screen">
+    <button class="back" onclick="backToPlus()">
+        ← Назад
+    </button>
+    <div class="section-top">
+        <h2 id="regionTitle">🇹🇷 Турция</h2>
+    </div>
+    <div class="visual plus">
+        <div class="visual-title">
+            <small>PLAYSTATION PLUS</small>
+            <strong id="regionVisual">Турция</strong>
+        </div>
+        <div class="visual-symbol">+</div>
+    </div>
+    <div class="plan-tabs">
+        <button id="essentialTab"
+                class="active"
+                onclick="selectPlan('Essential')">
+            Essential
+        </button>
+        <button id="extraTab"
+                onclick="selectPlan('Extra')">
+            Extra
+        </button>
+        <button id="deluxeTab"
+                onclick="selectPlan('Deluxe')">
+            Deluxe
+        </button>
+    </div>
+    <div id="terms"></div>
+</section>
+<!-- ORDER -->
+<section id="orderScreen" class="screen">
+    <button class="back" onclick="backToPlans()">
+        ← Назад
+    </button>
+    <div class="order-image">+</div>
+    <div class="order-box">
+        <h2 id="orderTitle">PS Plus Essential</h2>
+        <p id="orderDescription">
+            Выбранная подписка будет оформлена
+            для выбранного региона.
+        </p>
+        <div class="guarantee">
+            <strong>🛡️ Гарантия</strong>
+            <p>
+                Перед оформлением заказа мы проверяем
+                выбранный товар и регион. Если возникнет
+                проблема с предоставлением товара,
+                заказ рассматривается по условиям гарантии.
+            </p>
+        </div>
+        <div class="instruction">
+            <strong>📋 Как получить подписку</strong>
+            <p>
+                1. Оформите заказ.<br>
+                2. Получите дальнейшую инструкцию
+                после подтверждения заказа.<br>
+                3. Следуйте инструкции для активации
+                выбранной подписки.
+            </p>
+        </div>
+        <div class="safe">
+            🔐 <strong>Безопасность:</strong>
+            не отправляйте пароль или коды
+            двухфакторной аутентификации в чат.
+            Для получения товара используйте
+            безопасный способ активации,
+            указанный после оформления заказа.
+        </div>
+        <button class="buy"
+                onclick="confirmOrder()">
+            Перейти к покупке
+        </button>
+    </div>
+</section>
+<div class="footer">
+    PlayStation Hub
+</div>
+</div>
+<!-- INFO MODAL -->
+<div id="modal" class="modal">
+    <div class="modal-box">
+        <h2 id="modalTitle"></h2>
+        <p id="modalText"></p>
+        <button class="close"
+                onclick="closeInfo()">
+            Понятно
+        </button>
+    </div>
+</div>
+<script>
+let currentRegion = "";
+let currentPlan = "Essential";
+let previousPlanScreen = "plus";
+const plans = {
+    "🇹🇷 Турция":{
+        Essential:["1 000 ₽","3 000 ₽","6 300 ₽"],
+        Extra:["1 600 ₽","4 000 ₽","10 000 ₽"],
+        Deluxe:["1 800 ₽","4 500 ₽","12 000 ₽"]
+    },
+    "🇵🇱 Польша":{
+        Essential:["1 580 ₽","4 900 ₽","9 200 ₽"],
+        Extra:["3 000 ₽","6 000 ₽","16 150 ₽"],
+        Deluxe:["3 100 ₽","7 200 ₽","18 900 ₽"]
+    },
+    "🇺🇸 США":{
+        Essential:["1 100 ₽","2 700 ₽","8 400 ₽"],
+        Extra:["2 150 ₽","5 000 ₽","13 900 ₽"],
+        Deluxe:["2 300 ₽","5 100 ₽","16 000 ₽"]
+    },
+    "🇮🇳 Индия":{
+        Essential:["1 100 ₽","2 450 ₽","7 200 ₽"],
+        Extra:["1 380 ₽","3 700 ₽","10 600 ₽"],
+        Deluxe:["1 900 ₽","3 990 ₽","12 000 ₽"]
+    }
+};
+function hideScreens(){
+    document
+      .querySelectorAll(".screen")
+      .forEach(x=>x.classList.remove("active"));
+}
+function showMain(type){
+    hideScreens();
+    if(type==="plus"){
+        document
+          .getElementById("plusScreen")
+          .classList.add("active");
+        document
+          .getElementById("plusNav")
+          .classList.add("active");
+        document
+          .getElementById("giftNav")
+          .classList.remove("active");
+    }else{
+        document
+          .getElementById("giftsScreen")
+          .classList.add("active");
+        document
+          .getElementById("giftNav")
+          .classList.add("active");
+        document
+          .getElementById("plusNav")
+          .classList.remove("active");
+    }
+    window.scrollTo(0,0);
+}
+function openPlans(region){
+    currentRegion=region;
+    currentPlan="Essential";
+    hideScreens();
+    document
+      .getElementById("plansScreen")
+      .classList.add("active");
+    document
+      .getElementById("regionTitle")
+      .textContent=region;
+    document
+      .getElementById("regionVisual")
+      .textContent=region;
+    selectPlan("Essential");
+    window.scrollTo(0,0);
+}
+function selectPlan(plan){
+    currentPlan=plan;
+    document
+      .querySelectorAll(".plan-tabs button")
+      .forEach(x=>x.classList.remove("active"));
+    document
+      .getElementById(
+        plan.toLowerCase()+"Tab"
+      )
+      .classList.add("active");
+    const prices=plans[currentRegion][plan];
+    const names=[
+        "1 месяц",
+        "3 месяца",
+        "12 месяцев"
+    ];
+    let html="";
+    for(let i=0;i<3;i++){
+        html+=`
+        <div class="term-card">
+            <div class="term-row">
+                <span class="term">
+                    ${names[i]}
+                </span>
+                <div class="price">
+                    <span class="new">
+                        ${prices[i]}
+                    </span>
+                </div>
+            </div>
+            <button
+                class="buy"
+                onclick="openOrder('${plan}','${names[i]}','${prices[i]}')"
+            >
+                Купить
+            </button>
+        </div>
+        `;
+    }
+    document
+      .getElementById("terms")
+      .innerHTML=html;
+}
+function openOrder(plan,term,price){
+    hideScreens();
+    document
+      .getElementById("orderScreen")
+      .classList.add("active");
+    document
+      .getElementById("orderTitle")
+      .textContent=
+        "PS Plus "+plan+" • "+term;
+    document
+      .getElementById("orderDescription")
+      .textContent=
+        currentRegion+
+        " • "+
+        term+
+        " • "+
+        price;
+    window.scrollTo(0,0);
+}
+function backToPlus(){
+    hideScreens();
+    document
+      .getElementById("plusScreen")
+      .classList.add("active");
+    window.scrollTo(0,0);
+}
+function backToPlans(){
+    hideScreens();
+    document
+      .getElementById("plansScreen")
+      .classList.add("active");
+    window.scrollTo(0,0);
+}
+function openGift(region){
+    alert(
+      region+
+      "\\n\\nЗдесь оставляем твой существующий список подарочных карт."
+    );
+}
+function openInfo(type){
+    const modal=
+      document.getElementById("modal");
+    if(type==="plus"){
+        document.getElementById("modalTitle")
+          .textContent="Зачем нужен PS Plus?";
+        document.getElementById("modalText")
+          .textContent=
+          "PlayStation Plus даёт доступ к онлайн-мультиплееру, " +
+          "ежемесячным играм, специальным скидкам и другим " +
+          "возможностям. В зависимости от тарифа также " +
+          "доступен каталог игр и дополнительные функции.";
+    }else{
+        document.getElementById("modalTitle")
+          .textContent="Зачем нужна подарочная карта?";
+        document.getElementById("modalText")
+          .textContent=
+          "Подарочная карта PlayStation Store позволяет " +
+          "пополнить баланс магазина и использовать средства " +
+          "для покупки игр, дополнений, подписок и другого " +
+          "контента PlayStation Store. Регион карты должен " +
+          "соответствовать региону аккаунта.";
+    }
+    modal.classList.add("active");
+}
+function closeInfo(){
+    document
+      .getElementById("modal")
+      .classList.remove("active");
+}
+function confirmOrder(){
+    alert(
+      "Здесь подключается твоя настоящая кнопка покупки " +
+      "или переход в Telegram-бот."
+    );
+}
+</script>
+</body>
+</html>
