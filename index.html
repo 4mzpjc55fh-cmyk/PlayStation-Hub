@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlayStation Hub</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+    background: #f4f6fb;
+    color: #111827;
+}
+
+button {
+    font: inherit;
+    border: 0;
+    cursor: pointer;
+}
+
+.container {
+    width: min(1100px, 94%);
+    margin: auto;
+}
+
+.hero {
+    margin: 18px auto;
+    border-radius: 28px;
+    overflow: hidden;
+    background: #071b44;
+    box-shadow: 0 15px 45px rgba(0,0,0,.14);
+}
+
+.hero img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    display: block;
+}
+
+.hero-content {
+    padding: 24px;
+    color: white;
+}
+
+.hero-title {
+    font-size: 34px;
+    font-weight: 800;
+}
+
+.hero-subtitle {
+    margin-top: 8px;
+    color: #cbd5e1;
+}
+
+.discount {
+    margin-top: 18px;
+    display: inline-block;
+    background: #ffffff;
+    color: #0b3b91;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 800;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin: 22px auto 35px;
+}
+
+.product {
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    transition: .2s;
+}
+
+.product:hover {
+    transform: translateY(-3px);
+}
+
+.product img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+.product-body {
+    padding: 20px;
+}
+
+.product h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.product p {
+    color: #6b7280;
+    margin-bottom: 18px;
+}
+
+.main-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 15px;
+    background: #0b3b91;
+    color: white;
+    font-weight: 750;
+}
+
+.main-btn:hover {
+    background: #082f73;
+}
+
+.section {
+    display: none;
+    padding-bottom: 50px;
+}
+
+.section.active {
+    display: block;
+}
+
+.back {
+    margin: 18px 0;
+    background: white;
+    padding: 11px 16px;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.06);
+}
+
+.section-title {
+    font-size: 31px;
+    font-weight: 850;
+    margin-bottom: 18px;
+}
+
+.info-btn {
+    float: right;
+    background: #111827;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 13px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.info-card {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.06);
+}
+
+.info-card h3 {
+    margin-bottom: 9px;
+}
+
+.info-card p {
+    color: #5f6775;
+    line-height: 1.55;
+}
+
+.region-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.region {
+    background: white;
+    padding: 18px;
+    border-radius: 20px;
+    box-shadow: 0 7px 25px rgba(0,0,0,.06);
+}
+
+.region-name {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.from {
+    color: #6b7280;
+    margin-top: 5px;
+}
+
+.plan-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 18px 0;
+}
+
+.plan-btn {
+    background: white;
+    border: 2px solid #e5e7eb;
+    padding: 14px 8px;
+    border-radius: 15px;
+    font-weight: 800;
+}
+
+.plan-btn.active {
+    background: #0b3b91;
+    color: white;
+    border-color: #0b3b91;
+}
+
+.periods {
+    display: grid;
+    gap: 12px;
+}
+
+.price-card {
+    background: white;
+    border-radius: 18px;
+    padding: 17px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 7px 24px rgba(0,0,0,.06);
+}
+
+.price-info strong {
+    display: block;
+    font-size: 18px;
+}
+
+.old-price {
+    color: #9ca3af;
+    text-decoration: line-through;
+    margin-right: 8px;
+}
+
+.sale-price {
+    color: #0b3b91;
+    font-size: 20px;
+    font-weight: 850;
+}
+
+.buy-btn {
+    background: #0b3b91;
+    color: white;
+    padding: 12px 17px;
+    border-radius: 13px;
+    font-weight: 750;
+}
+
+.buy-btn:hover {
+    background: #082f73;
+}
+
+.purchase {
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 10px 35px rgba(0,0,0,.08);
+}
+
+.purchase img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.purchase-body {
+    padding: 23px;
+}
+
+.purchase-body h2 {
+    font-size: 27px;
+    margin-bottom: 15px;
+}
+
+.purchase-body p {
+    color: #5f6775;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.warning {
+    margin-top: 18px;
+    padding: 16px;
+    background: #f1f5ff;
+    border-radius: 16px;
+    color: #173d83;
+}
+
+.order-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 16px;
+    background: #0b3b91;
+    color: white;
+    border-radius: 15px;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.card-list {
+    display: grid;
+    gap: 12px;
+}
+
+.card-item {
+    background: white;
+    padding: 17px;
+    border-radius: 17px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 6px 22px rgba(0,0,0,.05);
+}
+
+@media(max-width:700px) {
+    .products,
+    .region-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero img {
+        height: 210px;
+    }
+
+    .hero-title {
+        font-size: 28px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ГЛАВНАЯ -->
+    <section id="home" class="section active">
+
+        <div class="hero">
+            <img src="ps-logo.jpeg" alt="PlayStation">
+            <div class="hero-content">
+                <div class="hero-title">PlayStation Hub</div>
+                <div class="hero-subtitle">
+                    Подарочные карты и PlayStation Plus
+                </div>
+                <div class="discount">🔥 Скидка 10% на всё</div>
+            </div>
+        </div>
+
+        <div class="products">
+
+            <div class="product">
+                <img src="gift-card.jpeg" alt="PlayStation Gift Card">
+                <div class="product-body">
+                    <h2>PlayStation Gift Card</h2>
+                    <p>Пополнение баланса PlayStation Store.</p>
+                    <button class="main-btn" onclick="showSection('cards')">
+                        Подарочные карты
+                    </button>
+                </div>
+            </div>
+
+            <div class="product">
+                <img src="ps-plus.jpeg" alt="PlayStation Plus">
+                <div class="product-body">
+                    <h2>PlayStation Plus</h2>
+                    <p>Выберите регион, тариф и срок подписки.</p>
+                    <button class="main-btn" onclick="showSection('plus')">
+                        PS Plus
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ПОДАРОЧНЫЕ КАРТЫ -->
+    <section id="cards" class="section">
+
+        <button class="back" onclick="showSection('home')">← Назад</button>
+
+        <div class="section-title">
+            PlayStation Gift Card
+            <button class="info-btn" onclick="showInfo('cardInfo')">
+                Зачем нужна карта?
+            </button>
+        </div>
+
+        <div id="cardInfo" class="info-card" style="display:none;">
+            <h3>Зачем нужна подарочная карта?</h3>
+            <p>
+                Подарочная карта позволяет пополнить баланс PlayStation Store
+                и использовать средства для покупки игр, дополнений и другого
+                цифрового контента.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Выберите регион</h3>
+            <p>После выбора региона появятся доступные номиналы.</p>
+        </div>
+
+        <div class="region-grid">
+
+            <div class="region">
+                <div class="region-name">🇹🇷 Турция</div>
+                <div class="from">от 550 ₽</div>
+                <button class="main-btn" style="margin-top:12px"
+                    onclick="showCards('tr')">Выбрать</button>
+            </div>
+
+            <div class="region">
+                <div class="region-name">🇺🇸 США</div>
+                <div class="from">от 85 ₽</div>
+                <button class="main-btn" style="margin-top:12px"
+                    onclick="showCards('us')">Выбрать</button>
+            </div>
+
+            <div class="region">
+                <div class="region-name">🇮🇳 Индия</div>
+                <div class="from">от 1105 ₽</div>
+                <button class="main-btn" style="margin-top:12px"
+                    onclick="showCards('in')">Выбрать</button>
+            </div>
+
+            <div class="region">
+                <div class="region-name">🇵🇱 Польша</div>
+                <div class="from">от 1150 ₽</div>
+                <button class="main-btn" style="margin-top:12px"
+                    onclick="showCards('pl')">Выбрать</button>
+            </div>
+
+            <div class="region">
+                <div class="region-name">🇺🇦 Украина</div>
+                <div class="from">Будет скоро</div>
+            </div>
+
+        </div>
+
+        <div id="cardsList" style="margin-top:20px;"></div>
+    </section>
+
+
+    <!-- PS PLUS -->
+    <section id="plus" class="section">
+
+        <button class="back" onclick="showSection('home')">← Назад</button>
+
+        <div class="section-title">
+            PlayStation Plus
+            <button class="info-btn" onclick="showInfo('plusInfo')">
+                Зачем нужна PS Plus?
+            </button>
+        </div>
+
+        <div id="plusInfo" class="info-card" style="display:none;">
+            <h3>Что входит в тарифы?</h3>
+
+            <p>
+                <strong>Essential</strong> — базовая подписка и игры месяца.
+            </p>
+
+            <br>
+
+            <p>
+                <strong>Extra</strong> — всё из Essential + каталог из
+                400 игр.
+            </p>
+
+            <br>
+
+            <p>
+                <strong>Deluxe</strong> — всё из Essential + дополнительные
+                возможности + 700 игр.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Выберите регион</h3>
+            <p>Затем выберите тариф Essential, Extra или Deluxe.</p>
+        </div>
+
+        <div class="region-grid">
+
+            <div class="region">
+                <div class="region-name">🇹🇷 Турция</div>
+                <div class="from">от 1000 ₽</div>
+                <button class="main-btn" style="margin-top:12px"
+                    onclick="openPlans('tr')">Выбрать</button>
+            </div>
+
+            <div class="region">
+                <div class="region-name">🇵🇱 Польша</div>
+                <div class="from">от 1580 ₽</div>
+                <button class="main-btn" style="margin-top:12px"
+                    onclick="openPlans('pl')">Выбрать</button>
+            </div>
+
+            <div class="region">
+                <div class="region-name">🇺🇸 США</div>
+                <div class="from">от 1100 ₽</div>
+                <button class="main-btn" style="margin-top:12px"
+                    onclick="openPlans('us')">Выбрать</button>
+            </div>
+
+            <div class="region">
+                <div class="region-name">🇮🇳 Индия</div>
+                <div class="from">от 1100 ₽</div>
+                <button class="main-btn" style="margin-top:12px"
+                    onclick="openPlans('in')">Выбрать</button>
+            </div>
+
+            <div class="region">
+                <div class="region-name">🇺🇦 Украина</div>
+                <div class="from">Будет скоро</div>
+            </div>
+
+        </div>
+
+        <div id="plans" style="margin-top:22px;"></div>
+
+    </section>
+
+
+    <!-- ПОКУПКА -->
+    <section id="purchase" class="section">
+
+        <button class="back" onclick="showSection('plus')">← Назад</button>
+
+        <div class="purchase">
+
+            <img src="ps-plus.jpeg" alt="PlayStation Plus">
+
+            <div class="purchase-body">
+
+                <h2 id="purchaseTitle">PlayStation Plus</h2>
+
+                <p>
+                    После оформления заказа с вами свяжется продавец
+                    и объяснит дальнейшие действия.
+                </p>
+
+                <div class="warning">
+                    <strong>Гарантия:</strong><br>
+                    После покупки продавец свяжется с вами и объяснит,
+                    как получить и активировать подписку.
+                </div>
+
+                <div class="info-card" style="margin-top:18px;">
+                    <h3>Как получить подписку?</h3>
+                    <p>
+                        1. Оформите заказ.<br>
+                        2. После оформления с вами свяжется продавец.<br>
+                        3. Продавец объяснит дальнейшие действия
+                        и порядок получения подписки.
+                    </p>
+                </div>
+
+                <button class="order-btn" onclick="makeOrder()">
+                    Оформить заказ
+                </button>
+
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+
+<script>
+
+const subscriptions = {
+
+    tr: {
+        name: "🇹🇷 Турция",
+        plans: {
+            Essential: [1000, 3000, 6300],
+            Extra: [1600, 4000, 10000],
+            Deluxe: [1800, 4500, 12000]
+        }
+    },
+
+    pl: {
+        name: "🇵🇱 Польша",
+        plans: {
+            Essential: [1580, 4900, 9200],
+            Extra: [3000, 6000, 16150],
+            Deluxe: [3100, 7200, 18900]
+        }
+    },
+
+    us: {
+        name: "🇺🇸 США",
+        plans: {
+            Essential: [1100, 2700, 8400],
+            Extra: [2150, 5000, 13900],
+            Deluxe: [2300, 5100, 16000]
+        }
+    },
+
+    in: {
+        name: "🇮🇳 Индия",
+        plans: {
+            Essential: [1100, 2450, 7200],
+            Extra: [1380, 3700, 10600],
+            Deluxe: [1900, 3990, 12000]
+        }
+    }
+};
+
+
+const giftCards = {
+
+    tr: [
+        ["250 лир", 550],
+        ["500 лир", 1000],
+        ["750 лир", 1550],
+        ["1000 лир", 2000],
+        ["1500 лир", 2900],
+        ["2000 лир", 4000],
+        ["2500 лир", 5000],
+        ["3000 лир", 6000],
+        ["3500 лир", 7000],
+        ["4000 лир", 8000],
+        ["4500 лир", 9000],
+        ["5000 лир", 10000]
+    ],
+
+    us: [
+        ["1 $", 85],
+        ["5 $", 475],
+        ["10 $", 950],
+        ["20 $", 1900],
+        ["25 $", 2375],
+        ["30 $", 2850],
+        ["40 $", 3850],
+        ["50 $", 4750],
+        ["75 $", 7125],
+        ["100 $", 9500]
+    ],
+
+    in: [
+        ["1000 рупий", 1105],
+        ["2000 рупий", 2210],
+        ["3000 рупий", 3315],
+        ["4000 рупий", 4420],
+        ["5000 рупий", 5525],
+        ["6000 рупий", 6630],
+        ["7000 рупий", 7735],
+        ["8000 рупий", 8840]
+    ],
+
+    pl: [
+        ["50 zł", 1150],
+        ["100 zł", 2300],
+        ["150 zł", 3450],
+        ["200 zł", 4600],
+        ["250 zł", 5750],
+        ["300 zł", 6900],
+        ["350 zł", 8050],
+        ["400 zł", 9200],
+        ["450 zł", 10350],
+        ["500 zł", 11500],
+        ["550 zł", 12650],
+        ["600 zł", 13800],
+        ["650 zł", 14950],
+        ["700 zł", 16100],
+        ["750 zł", 17250],
+        ["800 zł", 18400],
+        ["850 zł", 19550],
+        ["900 zł", 20700],
+        ["950 zł", 21850],
+        ["1000 zł", 23000]
+    ]
+};
+
+
+function showSection(id) {
+
+    document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function showInfo(id) {
+
+    const el = document.getElementById(id);
+
+    if (el.style.display === "none" || el.style.display === "") {
+        el.style.display = "block";
+    } else {
+        el.style.display = "none";
+    }
+}
+
+
+function openPlans(region) {
+
+    const data = subscriptions[region];
+
+    let html = `
+        <div class="info-card">
+            <h3>${data.name}</h3>
+
+            <div class="plan-buttons">
+                <button class="plan-btn active"
+                    onclick="selectPlan(this, '${region}', 'Essential')">
+                    Essential
+                </button>
+
+                <button class="plan-btn"
+                    onclick="selectPlan(this, '${region}', 'Extra')">
+                    Extra
+                </button>
+
+                <button class="plan-btn"
+                    onclick="selectPlan(this, '${region}', 'Deluxe')">
+                    Deluxe
+                </button>
+            </div>
+
+            <div id="selectedPlans">
+            </div>
+        </div>
+    `;
+
+    document.getElementById("plans").innerHTML = html;
+
+    renderPeriods(region, "Essential");
+}
+
+
+function selectPlan(button, region, plan) {
+
+    document.querySelectorAll(".plan-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    renderPeriods(region, plan);
+}
+
+
+function renderPeriods(region, plan) {
+
+    const prices = subscriptions[region].plans[plan];
+
+    const periods = [
+        ["1 месяц", prices[0]],
+        ["3 месяца", prices[1]],
+        ["12 месяцев", prices[2]]
+    ];
+
+    let html = `<div class="periods">`;
+
+    periods.forEach(item => {
+
+        const oldPrice = Math.round(item[1] * 1.10);
+
+        html += `
+            <div class="price-card">
+
+                <div class="price-info">
+                    <strong>${plan} — ${item[0]}</strong>
+
+                    <div>
+                        <span class="old-price">${oldPrice} ₽</span>
+                        <span class="sale-price">${item[1]} ₽</span>
+                    </div>
+                </div>
+
+                <button class="buy-btn"
+                    onclick="openPurchase('${region}', '${plan}', '${item[0]}', ${item[1]})">
+                    Купить
+                </button>
+
+            </div>
+        `;
+    });
+
+    html += `</div>`;
+
+    document.getElementById("selectedPlans").innerHTML = html;
+}
+
+
+function openPurchase(region, plan, period, price) {
+
+    document.getElementById("purchaseTitle").innerText =
+        `${subscriptions[region].name} — ${plan}, ${period} — ${price} ₽`;
+
+    showSection("purchase");
+}
+
+
+function makeOrder() {
+
+    alert(
+        "Заказ оформляется.\n\n" +
+        "После оформления с вами свяжется продавец " +
+        "и объяснит дальнейшие действия и порядок получения подписки."
+    );
+}
+
+
+function showCards(region) {
+
+    const list = giftCards[region];
+
+    let html = `
+        <div class="info-card">
+            <h3>Доступные номиналы</h3>
+        </div>
+
+        <div class="card-list">
+    `;
+
+    list.forEach(item => {
+
+        html += `
+            <div class="card-item">
+                <div>
+                    <strong>${item[0]}</strong>
+                </div>
+
+                <div>
+                    <span class="old-price">${Math.round(item[1] * 1.10)} ₽</span>
+                    <strong class="sale-price">${item[1]} ₽</strong>
+                </div>
+            </div>
+        `;
+    });
+
+    html += `</div>`;
+
+    document.getElementById("cardsList").innerHTML = html;
+}
+
+</script>
+
+</body>
+</html>
