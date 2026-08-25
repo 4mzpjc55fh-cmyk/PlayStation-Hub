@@ -1,0 +1,2979 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<title>PlayStation Hub</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    background:#05070d;
+}
+
+body{
+    background:
+        radial-gradient(circle at 50% -10%,#122b62 0%,#070b13 35%,#05070d 75%);
+    color:#fff;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+    min-height:100vh;
+    padding-bottom:92px;
+}
+
+button,
+select,
+input,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.app{
+    width:100%;
+    max-width:680px;
+    margin:auto;
+    padding:14px;
+}
+
+/* ================================
+   HEADER
+================================ */
+
+.header{
+    position:relative;
+    overflow:hidden;
+    min-height:220px;
+    border-radius:28px;
+    padding:27px;
+    margin-bottom:14px;
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(35,125,255,.65),
+            transparent 34%
+        ),
+        linear-gradient(
+            135deg,
+            #102c61,
+            #07101e 65%,
+            #050810
+        );
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.55);
+}
+
+.header:before{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    right:-100px;
+    bottom:-160px;
+    border-radius:50%;
+    background:#147cff;
+    opacity:.20;
+    filter:blur(45px);
+}
+
+.header-content{
+    position:relative;
+    z-index:2;
+}
+
+.ps{
+    font-size:46px;
+    font-weight:950;
+    letter-spacing:-5px;
+    margin-bottom:10px;
+}
+
+.header h1{
+    font-size:35px;
+    line-height:1;
+    margin-bottom:10px;
+}
+
+.header p{
+    color:#b8c6dd;
+    font-size:14px;
+}
+
+/* ================================
+   PROMO
+================================ */
+
+.discount{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:17px 19px;
+    border-radius:21px;
+    margin-bottom:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #155dff,
+            #5730ff
+        );
+
+    box-shadow:
+        0 12px 35px rgba(40,70,255,.25);
+}
+
+.discount strong{
+    font-size:17px;
+}
+
+.discount small{
+    display:block;
+    margin-top:4px;
+    color:#dbe4ff;
+}
+
+.discount span{
+    font-size:30px;
+    font-weight:950;
+}
+
+/* ================================
+   SCREEN
+================================ */
+
+.screen{
+    display:none;
+}
+
+.screen.active{
+    display:block;
+    animation:screenIn .2s ease;
+}
+
+@keyframes screenIn{
+    from{
+        opacity:0;
+        transform:translateY(6px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ================================
+   SECTION TOP
+================================ */
+
+.section-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:15px 2px 13px;
+}
+
+.section-top h2{
+    font-size:24px;
+}
+
+.info-btn{
+    border:0;
+    background:#111722;
+    color:#8fb8ff;
+    padding:9px 11px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:800;
+}
+
+/* ================================
+   VISUAL
+================================ */
+
+.visual{
+    position:relative;
+    overflow:hidden;
+    height:185px;
+    border-radius:25px;
+    margin-bottom:14px;
+
+    background:
+        radial-gradient(
+            circle at 75% 30%,
+            rgba(42,110,255,.7),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #071d51,
+            #101827 55%,
+            #080b12
+        );
+}
+
+.visual.gift{
+    background:
+        radial-gradient(
+            circle at 75% 35%,
+            rgba(50,130,255,.65),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #09245c,
+            #111827
+        );
+}
+
+.visual-title{
+    position:absolute;
+    left:22px;
+    bottom:20px;
+    z-index:2;
+}
+
+.visual-title small{
+    color:#b6c7e7;
+    font-weight:700;
+}
+
+.visual-title strong{
+    display:block;
+    font-size:29px;
+    margin-top:3px;
+}
+
+.visual-symbol{
+    position:absolute;
+    right:25px;
+    top:22px;
+    font-size:85px;
+    font-weight:950;
+    opacity:.92;
+
+    text-shadow:
+        0 0 35px rgba(50,130,255,.8);
+}
+
+/* ================================
+   REGIONS
+================================ */
+
+.subtitle{
+    color:#7e899c;
+    font-size:13px;
+    margin-bottom:11px;
+}
+
+.regions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.region{
+    padding:17px;
+    min-height:140px;
+    border-radius:21px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #121925,
+            #090d14
+        );
+
+    border:1px solid rgba(255,255,255,.06);
+
+    transition:.15s;
+}
+
+.region:active{
+    transform:scale(.97);
+}
+
+.flag{
+    font-size:36px;
+    margin-bottom:8px;
+}
+
+.region h3{
+    font-size:17px;
+}
+
+.region p{
+    color:#7f8a9d;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.from{
+    color:#68a5ff;
+    font-size:13px;
+    font-weight:900;
+    margin-top:9px;
+}
+
+/* ================================
+   SELECT
+================================ */
+
+.select-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+    margin-bottom:12px;
+}
+
+.select-box{
+    padding:15px;
+    border-radius:20px;
+
+    background:#101620;
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.select-box label{
+    display:block;
+    color:#8e9aae;
+    font-size:12px;
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+.custom-select{
+    width:100%;
+    appearance:none;
+    -webkit-appearance:none;
+
+    border:1px solid rgba(255,255,255,.08);
+    outline:none;
+
+    background:#0b1018;
+    color:#fff;
+
+    padding:13px 10px;
+    border-radius:14px;
+
+    font-size:13px;
+    font-weight:800;
+}
+
+/* ================================
+   PRICE
+================================ */
+
+.plus-result,
+.gift-result{
+    padding:20px;
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #121925,
+            #090d14
+        );
+
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.result-caption,
+.gift-result-title{
+    color:#8995a8;
+    font-size:13px;
+    margin-bottom:9px;
+}
+
+.price-line{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.old-price{
+    color:#687386;
+    text-decoration:line-through;
+    font-size:15px;
+}
+
+.sale-label{
+    color:#ff5265;
+    font-size:13px;
+    font-weight:950;
+}
+
+.final-price{
+    color:#ff5265;
+    font-size:27px;
+    font-weight:950;
+}
+
+.buy,
+.gift-buy{
+    width:100%;
+    border:0;
+
+    background:#147cff;
+    color:white;
+
+    padding:15px;
+    border-radius:14px;
+
+    margin-top:14px;
+
+    font-weight:900;
+    font-size:15px;
+}
+
+.buy:active,
+.gift-buy:active{
+    transform:scale(.98);
+}
+
+/* ================================
+   CASES
+================================ */
+
+.cases-title{
+    margin-top:10px;
+    margin-bottom:5px;
+}
+
+.cases-subtitle{
+    color:#7f8a9d;
+    font-size:13px;
+    margin-bottom:15px;
+}
+
+.case-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+}
+
+.case{
+    position:relative;
+    overflow:hidden;
+
+    min-height:220px;
+    padding:18px;
+
+    border-radius:24px;
+
+    background:
+        radial-gradient(
+            circle at 70% 20%,
+            rgba(56,130,255,.5),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #151d2c,
+            #080c13
+        );
+
+    border:1px solid rgba(255,255,255,.07);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.3);
+
+    transition:.16s;
+}
+
+.case:active{
+    transform:scale(.97);
+}
+
+.case-icon{
+    text-align:center;
+    font-size:65px;
+    margin:7px 0 8px;
+
+    filter:
+        drop-shadow(
+            0 0 18px rgba(50,130,255,.6)
+        );
+}
+
+.case h3{
+    text-align:center;
+    font-size:17px;
+}
+
+.case-price{
+    text-align:center;
+    color:#75aaff;
+    font-size:17px;
+    font-weight:950;
+    margin-top:7px;
+}
+
+.case-tag{
+    display:inline-block;
+    position:absolute;
+    top:12px;
+    left:12px;
+
+    padding:5px 8px;
+
+    border-radius:8px;
+
+    background:rgba(20,124,255,.18);
+    color:#8bbcff;
+
+    font-size:9px;
+    font-weight:900;
+}
+
+.case-button{
+    width:100%;
+    border:0;
+
+    margin-top:12px;
+    padding:11px;
+
+    border-radius:12px;
+
+    background:#147cff;
+    color:white;
+
+    font-size:13px;
+    font-weight:900;
+}
+
+/* ================================
+   CASE MODAL
+================================ */
+
+.case-modal{
+    position:fixed;
+    inset:0;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.78);
+    backdrop-filter:blur(12px);
+
+    z-index:500;
+}
+
+.case-modal.active{
+    display:flex;
+}
+
+.case-modal-box{
+    width:100%;
+    max-width:420px;
+
+    padding:25px;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151e30,
+            #080c13
+        );
+
+    border:1px solid rgba(255,255,255,.1);
+
+    text-align:center;
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.7);
+}
+
+.case-big{
+    font-size:100px;
+    margin:15px 0;
+
+    filter:
+        drop-shadow(
+            0 0 30px rgba(40,125,255,.8)
+        );
+}
+
+.case-opening{
+    animation:caseShake .7s infinite;
+}
+
+@keyframes caseShake{
+    0%,100%{
+        transform:rotate(0) scale(1);
+    }
+    25%{
+        transform:rotate(-5deg) scale(1.05);
+    }
+    75%{
+        transform:rotate(5deg) scale(1.05);
+    }
+}
+
+.result-prize{
+    display:none;
+}
+
+.result-prize.active{
+    display:block;
+    animation:prizeIn .45s ease;
+}
+
+@keyframes prizeIn{
+    from{
+        opacity:0;
+        transform:scale(.6);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.prize-icon{
+    font-size:75px;
+    margin:10px;
+}
+
+.prize-name{
+    font-size:23px;
+    font-weight:950;
+}
+
+.prize-rarity{
+    color:#75aaff;
+    font-size:13px;
+    margin-top:5px;
+}
+
+/* ================================
+   SUPPORT
+================================ */
+
+.support-card{
+    padding:20px;
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #121925,
+            #090d14
+        );
+
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.support-icon{
+    width:65px;
+    height:65px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #147cff,
+            #5730ff
+        );
+
+    font-size:31px;
+
+    margin-bottom:15px;
+}
+
+.support-card h2{
+    font-size:23px;
+    margin-bottom:7px;
+}
+
+.support-card p{
+    color:#919caf;
+    line-height:1.5;
+    font-size:14px;
+}
+
+.message-box{
+    margin-top:18px;
+}
+
+.message-box textarea{
+    width:100%;
+    min-height:140px;
+
+    resize:none;
+
+    border:1px solid rgba(255,255,255,.08);
+    outline:none;
+
+    background:#080d15;
+    color:#fff;
+
+    border-radius:17px;
+
+    padding:15px;
+
+    font-size:15px;
+}
+
+.message-box textarea:focus{
+    border-color:#287eff;
+}
+
+.send-button{
+    width:100%;
+    border:0;
+
+    margin-top:10px;
+    padding:15px;
+
+    border-radius:14px;
+
+    background:#147cff;
+    color:white;
+
+    font-weight:900;
+}
+
+.support-status{
+    display:none;
+
+    margin-top:12px;
+    padding:13px;
+
+    border-radius:14px;
+
+    background:rgba(50,210,120,.08);
+    border:1px solid rgba(50,210,120,.2);
+
+    color:#8ce7b4;
+
+    font-size:13px;
+}
+
+/* ================================
+   ORDER
+================================ */
+
+.order-image{
+    height:190px;
+    border-radius:24px;
+
+    background:
+        radial-gradient(
+            circle at 75% 30%,
+            rgba(30,115,255,.6),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            #071b4d,
+            #0d1420
+        );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:82px;
+    font-weight:950;
+
+    text-shadow:
+        0 0 35px #177cff;
+
+    margin-bottom:14px;
+}
+
+.order-box{
+    padding:20px;
+    border-radius:22px;
+
+    background:#101620;
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.order-box h2{
+    margin-bottom:7px;
+}
+
+.order-box p{
+    color:#98a4b7;
+    font-size:14px;
+    line-height:1.55;
+}
+
+.guarantee,
+.instruction{
+    margin-top:15px;
+    padding:15px;
+    border-radius:16px;
+}
+
+.guarantee{
+    background:rgba(20,124,255,.09);
+    border:1px solid rgba(20,124,255,.18);
+}
+
+.instruction{
+    background:#0b1018;
+}
+
+.guarantee strong,
+.instruction strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+/* ================================
+   MODAL
+================================ */
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(10px);
+
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+
+    z-index:400;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    width:min(680px,100%);
+
+    background:#111722;
+
+    border-radius:28px 28px 0 0;
+
+    padding:24px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.modal-box h2{
+    margin-bottom:10px;
+}
+
+.modal-box p{
+    color:#a1acbd;
+    line-height:1.6;
+    font-size:14px;
+}
+
+.close{
+    width:100%;
+    border:0;
+
+    background:#147cff;
+    color:#fff;
+
+    padding:14px;
+
+    border-radius:14px;
+
+    margin-top:18px;
+
+    font-weight:900;
+}
+
+/* ================================
+   BACK
+================================ */
+
+.back{
+    border:0;
+
+    background:#111722;
+    color:white;
+
+    padding:10px 14px;
+    border-radius:12px;
+
+    font-weight:800;
+    margin-bottom:12px;
+}
+
+/* ================================
+   BOTTOM NAV
+================================ */
+
+.bottom-nav{
+    position:fixed;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    z-index:300;
+
+    padding:
+        8px
+        12px
+        calc(8px + env(safe-area-inset-bottom));
+
+    background:
+        rgba(7,10,17,.92);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+.bottom-inner{
+    width:100%;
+    max-width:680px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+
+    gap:7px;
+
+    background:#0d121b;
+
+    border-radius:20px;
+
+    padding:6px;
+}
+
+.bottom-btn{
+    position:relative;
+
+    border:0;
+
+    background:transparent;
+    color:#697589;
+
+    padding:10px 5px 9px;
+
+    border-radius:15px;
+
+    font-size:11px;
+    font-weight:850;
+
+    transition:.15s;
+}
+
+.bottom-btn .nav-icon{
+    display:block;
+    font-size:22px;
+    line-height:22px;
+    margin-bottom:4px;
+}
+
+.bottom-btn.active{
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #147cff,
+            #3c4fff
+        );
+
+    box-shadow:
+        0 7px 22px
+        rgba(20,124,255,.25);
+}
+
+/* ================================
+   FOOTER
+================================ */
+
+.footer{
+    text-align:center;
+    color:#596476;
+    font-size:11px;
+    margin:35px 0 15px;
+}
+
+@media(max-width:430px){
+
+    .header h1{
+        font-size:31px;
+    }
+
+    .case-grid{
+        gap:8px;
+    }
+
+    .case{
+        min-height:210px;
+        padding:14px;
+    }
+
+    .case-icon{
+        font-size:57px;
+    }
+
+    .select-box{
+        padding:12px;
+    }
+
+    .custom-select{
+        font-size:12px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- ================================
+     CATALOG
+================================ -->
+
+<section id="catalogScreen" class="screen active">
+
+    <header class="header">
+
+        <div class="header-content">
+
+            <div class="ps">PS</div>
+
+            <h1>
+                PlayStation Hub
+            </h1>
+
+            <p>
+                Подарочные карты и PlayStation Plus
+            </p>
+
+        </div>
+
+    </header>
+
+    <div class="discount">
+
+        <div>
+
+            <strong>
+                🔥 Скидка на всё
+            </strong>
+
+            <small>
+                Подарочные карты и PS Plus
+            </small>
+
+        </div>
+
+        <span>
+            −10%
+        </span>
+
+    </div>
+
+
+    <!-- PS PLUS -->
+
+    <div class="section-top">
+
+        <h2>
+            ⭐ PS Plus
+        </h2>
+
+        <button
+            class="info-btn"
+            onclick="openInfo('plus')">
+
+            Зачем нужна?
+
+        </button>
+
+    </div>
+
+
+    <div class="visual">
+
+        <div class="visual-title">
+
+            <small>
+                PLAYSTATION
+            </small>
+
+            <strong>
+                PlayStation Plus
+            </strong>
+
+        </div>
+
+        <div class="visual-symbol">
+            +
+        </div>
+
+    </div>
+
+
+    <div class="subtitle">
+        Выберите регион
+    </div>
+
+
+    <div class="regions">
+
+        <div
+            class="region"
+            onclick="openPlans('🇹🇷 Турция')">
+
+            <div class="flag">🇹🇷</div>
+
+            <h3>Турция</h3>
+
+            <p>
+                PlayStation Plus
+            </p>
+
+            <div class="from">
+                от 1 000 ₽
+            </div>
+
+        </div>
+
+
+        <div
+            class="region"
+            onclick="openPlans('🇵🇱 Польша')">
+
+            <div class="flag">🇵🇱</div>
+
+            <h3>Польша</h3>
+
+            <p>
+                PlayStation Plus
+            </p>
+
+            <div class="from">
+                от 1 580 ₽
+            </div>
+
+        </div>
+
+
+        <div
+            class="region"
+            onclick="openPlans('🇺🇸 США')">
+
+            <div class="flag">🇺🇸</div>
+
+            <h3>США</h3>
+
+            <p>
+                PlayStation Plus
+            </p>
+
+            <div class="from">
+                от 1 100 ₽
+            </div>
+
+        </div>
+
+
+        <div
+            class="region"
+            onclick="openPlans('🇮🇳 Индия')">
+
+            <div class="flag">🇮🇳</div>
+
+            <h3>Индия</h3>
+
+            <p>
+                PlayStation Plus
+            </p>
+
+            <div class="from">
+                от 1 100 ₽
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="soon"
+         style="
+         margin-top:12px;
+         padding:17px;
+         border-radius:20px;
+         background:#0d121b;
+         border:1px dashed #3a4557;
+         text-align:center;
+         color:#8c97a9;
+         ">
+
+        <strong
+            style="
+            display:block;
+            color:#fff;
+            margin-bottom:4px;
+            ">
+            🇺🇦 Украина
+        </strong>
+
+        Будет скоро
+
+    </div>
+
+
+    <!-- GIFTS -->
+
+    <div class="section-top"
+         style="margin-top:27px;">
+
+        <h2>
+            🎁 Подарочные карты
+        </h2>
+
+        <button
+            class="info-btn"
+            onclick="openInfo('gift')">
+
+            Зачем нужна?
+
+        </button>
+
+    </div>
+
+
+    <div class="visual gift">
+
+        <div class="visual-title">
+
+            <small>
+                PLAYSTATION STORE
+            </small>
+
+            <strong>
+                Gift Cards
+            </strong>
+
+        </div>
+
+        <div class="visual-symbol">
+            🎁
+        </div>
+
+    </div>
+
+
+    <div class="subtitle">
+        Выберите регион
+    </div>
+
+
+    <div class="regions">
+
+        <div
+            class="region"
+            onclick="openGiftRegion('🇹🇷 Турция')">
+
+            <div class="flag">🇹🇷</div>
+
+            <h3>Турция</h3>
+
+            <p>
+                PlayStation Store
+            </p>
+
+            <div class="from">
+                от 550 ₽
+            </div>
+
+        </div>
+
+
+        <div
+            class="region"
+            onclick="openGiftRegion('🇵🇱 Польша')">
+
+            <div class="flag">🇵🇱</div>
+
+            <h3>Польша</h3>
+
+            <p>
+                PlayStation Store
+            </p>
+
+            <div class="from">
+                от 1 150 ₽
+            </div>
+
+        </div>
+
+
+        <div
+            class="region"
+            onclick="openGiftRegion('🇺🇸 США')">
+
+            <div class="flag">🇺🇸</div>
+
+            <h3>США</h3>
+
+            <p>
+                PlayStation Store
+            </p>
+
+            <div class="from">
+                от 85 ₽
+            </div>
+
+        </div>
+
+
+        <div
+            class="region"
+            onclick="openGiftRegion('🇮🇳 Индия')">
+
+            <div class="flag">🇮🇳</div>
+
+            <h3>Индия</h3>
+
+            <p>
+                PlayStation Store
+            </p>
+
+            <div class="from">
+                от 1 105 ₽
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="important"
+        style="
+        margin-top:12px;
+        padding:15px;
+        border-radius:16px;
+        background:rgba(255,190,50,.07);
+        border:1px solid rgba(255,190,50,.22);
+        color:#cbd1db;
+        font-size:13px;
+        line-height:1.5;
+        ">
+
+        <strong
+            style="
+            display:block;
+            color:#ffd34e;
+            margin-bottom:5px;
+            ">
+            ⚠️ Важно
+        </strong>
+
+        Регион подарочной карты должен
+        соответствовать региону вашего
+        PlayStation аккаунта.
+
+    </div>
+
+
+    <div class="footer">
+        PlayStation Hub
+    </div>
+
+</section>
+
+
+<!-- ================================
+     CASES
+================================ -->
+
+<section id="casesScreen" class="screen">
+
+    <div class="section-top">
+
+        <div>
+
+            <h2 class="cases-title">
+                🎁 Кейсы
+            </h2>
+
+            <div class="cases-subtitle">
+                Открой кейс и получи случайный приз
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="case-grid">
+
+
+        <div class="case">
+
+            <span class="case-tag">
+                START
+            </span>
+
+            <div class="case-icon">
+                🎁
+            </div>
+
+            <h3>
+                Обычный
+            </h3>
+
+            <div class="case-price">
+                299 ₽
+            </div>
+
+            <button
+                class="case-button"
+                onclick="openCase('Обычный',299)">
+                Открыть
+            </button>
+
+        </div>
+
+
+        <div class="case">
+
+            <span class="case-tag">
+                HOT
+            </span>
+
+            <div class="case-icon">
+                🔥
+            </div>
+
+            <h3>
+                Премиум
+            </h3>
+
+            <div class="case-price">
+                699 ₽
+            </div>
+
+            <button
+                class="case-button"
+                onclick="openCase('Премиум',699)">
+                Открыть
+            </button>
+
+        </div>
+
+
+        <div class="case">
+
+            <span class="case-tag">
+                VIP
+            </span>
+
+            <div class="case-icon">
+                💎
+            </div>
+
+            <h3>
+                VIP
+            </h3>
+
+            <div class="case-price">
+                1 499 ₽
+            </div>
+
+            <button
+                class="case-button"
+                onclick="openCase('VIP',1499)">
+                Открыть
+            </button>
+
+        </div>
+
+
+        <div class="case">
+
+            <span class="case-tag">
+                RARE
+            </span>
+
+            <div class="case-icon">
+                👑
+            </div>
+
+            <h3>
+                Legendary
+            </h3>
+
+            <div class="case-price">
+                2 999 ₽
+            </div>
+
+            <button
+                class="case-button"
+                onclick="openCase('Legendary',2999)">
+                Открыть
+            </button>
+
+        </div>
+
+
+        <div class="case"
+             style="grid-column:1/-1;">
+
+            <span class="case-tag">
+                MEGA
+            </span>
+
+            <div class="case-icon">
+                ⚡
+            </div>
+
+            <h3>
+                Mega Case
+            </h3>
+
+            <div class="case-price">
+                4 999 ₽
+            </div>
+
+            <button
+                class="case-button"
+                onclick="openCase('Mega',4999)">
+                Открыть
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        style="
+        margin-top:15px;
+        padding:15px;
+        border-radius:17px;
+        background:#0d121b;
+        border:1px solid rgba(255,255,255,.05);
+        color:#858fa1;
+        font-size:12px;
+        line-height:1.5;
+        ">
+
+        ℹ️ Перед запуском реальных продаж
+        обязательно добавь серверную проверку
+        оплаты и систему выдачи призов.
+
+    </div>
+
+</section>
+
+
+<!-- ================================
+     SUPPORT
+================================ -->
+
+<section id="supportScreen" class="screen">
+
+    <div class="section-top">
+
+        <h2>
+            💬 Поддержка
+        </h2>
+
+    </div>
+
+
+    <div class="support-card">
+
+        <div class="support-icon">
+            💬
+        </div>
+
+        <h2>
+            Чем можем помочь?
+        </h2>
+
+        <p>
+            Напиши свой вопрос ниже.
+            Мы поможем с заказом, PS Plus,
+            подарочными картами и другими
+            вопросами.
+        </p>
+
+
+        <div class="message-box">
+
+            <textarea
+                id="supportMessage"
+                placeholder="Напишите сообщение..."></textarea>
+
+
+            <button
+                class="send-button"
+                onclick="sendSupport()">
+
+                📤 Отправить сообщение
+
+            </button>
+
+
+            <div
+                id="supportStatus"
+                class="support-status">
+
+                ✅ Сообщение подготовлено.
+                Для настоящей отправки подключи
+                Telegram-бота к серверу.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================
+     PLUS PLANS
+================================ -->
+
+<section id="plansScreen" class="screen">
+
+    <button
+        class="back"
+        onclick="showCatalog()">
+
+        ← Назад
+
+    </button>
+
+
+    <div class="section-top">
+
+        <h2 id="regionTitle">
+            🇹🇷 Турция
+        </h2>
+
+    </div>
+
+
+    <div class="visual">
+
+        <div class="visual-title">
+
+            <small>
+                PLAYSTATION PLUS
+            </small>
+
+            <strong id="regionVisual">
+                Турция
+            </strong>
+
+        </div>
+
+        <div class="visual-symbol">
+            +
+        </div>
+
+    </div>
+
+
+    <div class="select-row">
+
+        <div class="select-box">
+
+            <label>
+                Выберите тариф
+            </label>
+
+            <select
+                id="planSelect"
+                class="custom-select"
+                onchange="updatePlusPrice()">
+
+                <option value="Essential">
+                    Essential
+                </option>
+
+                <option value="Extra">
+                    Extra
+                </option>
+
+                <option value="Deluxe">
+                    Deluxe
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="select-box">
+
+            <label>
+                Выберите срок
+            </label>
+
+            <select
+                id="termSelect"
+                class="custom-select"
+                onchange="updatePlusPrice()">
+
+                <option value="1">
+                    1 месяц
+                </option>
+
+                <option value="3">
+                    3 месяца
+                </option>
+
+                <option value="12">
+                    12 месяцев
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="plus-result">
+
+        <div class="result-caption">
+            Цена со скидкой −10%
+        </div>
+
+        <div class="price-line">
+
+            <span
+                id="plusOldPrice"
+                class="old-price">
+            </span>
+
+            <span class="sale-label">
+                −10%
+            </span>
+
+            <span
+                id="plusFinalPrice"
+                class="final-price">
+            </span>
+
+        </div>
+
+
+        <button
+            class="buy"
+            onclick="openPlusOrder()">
+
+            Купить
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================================
+     GIFT REGION
+================================ -->
+
+<section id="giftRegionScreen" class="screen">
+
+    <button
+        class="back"
+        onclick="showCatalog()">
+
+        ← Назад
+
+    </button>
+
+
+    <div class="section-top">
+
+        <h2 id="giftRegionTitle">
+            🇹🇷 Турция
+        </h2>
+
+    </div>
+
+
+    <div class="visual gift">
+
+        <div class="visual-title">
+
+            <small>
+                PLAYSTATION STORE
+            </small>
+
+            <strong id="giftRegionVisual">
+                Турция
+            </strong>
+
+        </div>
+
+        <div class="visual-symbol">
+            🎁
+        </div>
+
+    </div>
+
+
+    <div class="select-box">
+
+        <label>
+            Выберите номинал
+        </label>
+
+        <select
+            id="giftSelect"
+            class="custom-select"
+            onchange="updateGiftPrice()">
+
+            <option value="">
+                Выберите номинал
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div
+        id="giftResult"
+        style="display:none;margin-top:12px;">
+
+        <div class="gift-result">
+
+            <div class="gift-result-title">
+                Цена со скидкой −10%
+            </div>
+
+            <div class="price-line">
+
+                <span
+                    id="giftOldPrice"
+                    class="old-price">
+                </span>
+
+                <span class="sale-label">
+                    −10%
+                </span>
+
+                <span
+                    id="giftFinalPrice"
+                    class="final-price">
+                </span>
+
+            </div>
+
+
+            <button
+                class="gift-buy"
+                onclick="buySelectedGift()">
+
+                🎁 Купить
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================
+     ORDER
+================================ -->
+
+<section id="orderScreen" class="screen">
+
+    <button
+        class="back"
+        onclick="showCatalog()">
+
+        ← Назад
+
+    </button>
+
+
+    <div
+        id="orderImage"
+        class="order-image">
+
+        +
+
+    </div>
+
+
+    <div class="order-box">
+
+        <h2 id="orderTitle">
+            Заказ
+        </h2>
+
+        <p id="orderDescription">
+            Выбранный товар
+        </p>
+
+
+        <div class="guarantee">
+
+            <strong>
+                🛡️ Гарантия
+            </strong>
+
+            <p>
+                Перед оформлением заказа
+                проверь выбранный регион
+                и товар.
+            </p>
+
+        </div>
+
+
+        <div class="instruction">
+
+            <strong>
+                📋 Как получить товар
+            </strong>
+
+            <p>
+                1. Оформите заказ.<br>
+                2. Получите дальнейшую инструкцию.<br>
+                3. Следуйте инструкции
+                для активации товара.
+            </p>
+
+        </div>
+
+
+        <button
+            class="buy"
+            onclick="confirmOrder()">
+
+            Перейти к покупке
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<div class="footer">
+    PlayStation Hub
+</div>
+
+</div>
+
+
+<!-- ================================
+     BOTTOM NAV
+================================ -->
+
+<nav class="bottom-nav">
+
+    <div class="bottom-inner">
+
+        <button
+            id="navCatalog"
+            class="bottom-btn active"
+            onclick="switchBottom('catalog')">
+
+            <span class="nav-icon">
+                📦
+            </span>
+
+            Каталог
+
+        </button>
+
+
+        <button
+            id="navCases"
+            class="bottom-btn"
+            onclick="switchBottom('cases')">
+
+            <span class="nav-icon">
+                🎁
+            </span>
+
+            Кейсы
+
+        </button>
+
+
+        <button
+            id="navSupport"
+            class="bottom-btn"
+            onclick="switchBottom('support')">
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            Поддержка
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- ================================
+     INFO MODAL
+================================ -->
+
+<div
+    id="modal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <h2 id="modalTitle">
+        </h2>
+
+        <p id="modalText">
+        </p>
+
+        <button
+            class="close"
+            onclick="closeInfo()">
+
+            Понятно
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================================
+     CASE MODAL
+================================ -->
+
+<div
+    id="caseModal"
+    class="case-modal">
+
+    <div class="case-modal-box">
+
+        <h2 id="caseModalTitle">
+            🎁 Открываем кейс
+        </h2>
+
+
+        <div
+            id="caseBig"
+            class="case-big case-opening">
+
+            🎁
+
+        </div>
+
+
+        <div
+            id="caseOpeningText"
+            style="
+            color:#929caf;
+            font-size:13px;
+            ">
+
+            Проверяем кейс...
+
+        </div>
+
+
+        <div
+            id="resultPrize"
+            class="result-prize">
+
+            <div
+                id="prizeIcon"
+                class="prize-icon">
+
+                🎁
+
+            </div>
+
+            <div
+                id="prizeName"
+                class="prize-name">
+
+                Приз
+
+            </div>
+
+            <div
+                id="prizeRarity"
+                class="prize-rarity">
+
+                Редкий
+
+            </div>
+
+
+            <button
+                class="close"
+                onclick="closeCase()">
+
+                Забрать
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   TELEGRAM
+========================================== */
+
+const tg =
+    window.Telegram &&
+    window.Telegram.WebApp
+        ? window.Telegram.WebApp
+        : null;
+
+if(tg){
+
+    tg.ready();
+
+    tg.expand();
+
+}
+
+
+/* ==========================================
+   DATA
+========================================== */
+
+const plans = {
+
+    "🇹🇷 Турция":{
+        Essential:[1000,3000,6300],
+        Extra:[1600,4000,10000],
+        Deluxe:[1800,4500,12000]
+    },
+
+    "🇵🇱 Польша":{
+        Essential:[1580,4900,9200],
+        Extra:[3000,6000,16150],
+        Deluxe:[3100,7200,18900]
+    },
+
+    "🇺🇸 США":{
+        Essential:[1100,2700,8400],
+        Extra:[2150,5000,13900],
+        Deluxe:[2300,5100,16000]
+    },
+
+    "🇮🇳 Индия":{
+        Essential:[1100,2450,7200],
+        Extra:[1380,3700,10600],
+        Deluxe:[1900,3990,12000]
+    }
+
+};
+
+
+const giftCards = {
+
+    "🇹🇷 Турция":[
+        ["250 лир",550],
+        ["500 лир",1000],
+        ["750 лир",1550],
+        ["1000 лир",2000],
+        ["1500 лир",2900],
+        ["2000 лир",4000],
+        ["2500 лир",5000],
+        ["3000 лир",6000]
+    ],
+
+    "🇺🇸 США":[
+        ["1$",85],
+        ["5$",475],
+        ["10$",950],
+        ["20$",1900],
+        ["25$",2375],
+        ["50$",4750],
+        ["100$",9500]
+    ],
+
+    "🇮🇳 Индия":[
+        ["1000 рупий",1105],
+        ["2000 рупий",2210],
+        ["3000 рупий",3315],
+        ["5000 рупий",5525],
+        ["8000 рупий",8840]
+    ],
+
+    "🇵🇱 Польша":[
+        ["50 zł",1150],
+        ["100 zł",2300],
+        ["150 zł",3450],
+        ["200 zł",4600],
+        ["300 zł",6900],
+        ["500 zł",11500],
+        ["1000 zł",23000]
+    ]
+
+};
+
+
+let currentRegion="";
+let currentGiftRegion="";
+let selectedGift=null;
+
+
+/* ==========================================
+   SCREEN CONTROL
+========================================== */
+
+function hideScreens(){
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen=>{
+            screen.classList.remove("active");
+        });
+
+}
+
+
+function showCatalog(){
+
+    hideScreens();
+
+    document
+        .getElementById("catalogScreen")
+        .classList.add("active");
+
+    setBottomActive("catalog");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* ==========================================
+   BOTTOM NAV
+========================================== */
+
+function switchBottom(type){
+
+    hideScreens();
+
+    if(type==="catalog"){
+
+        document
+            .getElementById("catalogScreen")
+            .classList.add("active");
+
+    }
+
+    if(type==="cases"){
+
+        document
+            .getElementById("casesScreen")
+            .classList.add("active");
+
+    }
+
+    if(type==="support"){
+
+        document
+            .getElementById("supportScreen")
+            .classList.add("active");
+
+    }
+
+    setBottomActive(type);
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+function setBottomActive(type){
+
+    document
+        .querySelectorAll(".bottom-btn")
+        .forEach(btn=>{
+            btn.classList.remove("active");
+        });
+
+
+    if(type==="catalog"){
+
+        document
+            .getElementById("navCatalog")
+            .classList.add("active");
+
+    }
+
+
+    if(type==="cases"){
+
+        document
+            .getElementById("navCases")
+            .classList.add("active");
+
+    }
+
+
+    if(type==="support"){
+
+        document
+            .getElementById("navSupport")
+            .classList.add("active");
+
+    }
+
+}
+
+
+/* ==========================================
+   PS PLUS
+========================================== */
+
+function openPlans(region){
+
+    currentRegion=region;
+
+    hideScreens();
+
+    document
+        .getElementById("plansScreen")
+        .classList.add("active");
+
+    document
+        .getElementById("regionTitle")
+        .textContent=region;
+
+    document
+        .getElementById("regionVisual")
+        .textContent=region;
+
+    document
+        .getElementById("planSelect")
+        .value="Essential";
+
+    document
+        .getElementById("termSelect")
+        .value="1";
+
+    updatePlusPrice();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+function updatePlusPrice(){
+
+    if(!currentRegion){
+        return;
+    }
+
+    const plan =
+        document
+            .getElementById("planSelect")
+            .value;
+
+    const term =
+        Number(
+            document
+                .getElementById("termSelect")
+                .value
+        );
+
+    const index={
+        1:0,
+        3:1,
+        12:2
+    };
+
+    const finalPrice =
+        plans[currentRegion][plan][index[term]];
+
+    const oldPrice =
+        Math.round(finalPrice*1.10);
+
+    document
+        .getElementById("plusOldPrice")
+        .textContent =
+        formatPrice(oldPrice);
+
+    document
+        .getElementById("plusFinalPrice")
+        .textContent =
+        formatPrice(finalPrice);
+
+}
+
+
+function openPlusOrder(){
+
+    const plan =
+        document
+            .getElementById("planSelect")
+            .value;
+
+    const term =
+        Number(
+            document
+                .getElementById("termSelect")
+                .value
+        );
+
+    const names={
+        1:"1 месяц",
+        3:"3 месяца",
+        12:"12 месяцев"
+    };
+
+    const index={
+        1:0,
+        3:1,
+        12:2
+    };
+
+    const price =
+        plans[currentRegion][plan][index[term]];
+
+    hideScreens();
+
+    document
+        .getElementById("orderScreen")
+        .classList.add("active");
+
+    document
+        .getElementById("orderImage")
+        .textContent="+";
+
+    document
+        .getElementById("orderTitle")
+        .textContent =
+        "⭐ PS Plus "+plan;
+
+    document
+        .getElementById("orderDescription")
+        .textContent =
+        currentRegion+
+        " • "+
+        names[term]+
+        " • "+
+        formatPrice(price);
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* ==========================================
+   GIFTS
+========================================== */
+
+function openGiftRegion(region){
+
+    currentGiftRegion=region;
+
+    hideScreens();
+
+    document
+        .getElementById("giftRegionScreen")
+        .classList.add("active");
+
+    document
+        .getElementById("giftRegionTitle")
+        .textContent=region;
+
+    document
+        .getElementById("giftRegionVisual")
+        .textContent=region;
+
+    const select =
+        document
+            .getElementById("giftSelect");
+
+    select.innerHTML =
+        '<option value="">Выберите номинал</option>';
+
+    giftCards[region].forEach(
+        (item,index)=>{
+
+            const option =
+                document.createElement("option");
+
+            option.value=index;
+
+            option.textContent=item[0];
+
+            select.appendChild(option);
+
+        }
+    );
+
+    document
+        .getElementById("giftResult")
+        .style.display="none";
+
+    selectedGift=null;
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+function updateGiftPrice(){
+
+    const select =
+        document
+            .getElementById("giftSelect");
+
+    if(select.value===""){
+
+        document
+            .getElementById("giftResult")
+            .style.display="none";
+
+        selectedGift=null;
+
+        return;
+
+    }
+
+    const item =
+        giftCards[currentGiftRegion]
+        [Number(select.value)];
+
+    const finalPrice=item[1];
+
+    const oldPrice =
+        Math.round(finalPrice*1.10);
+
+    selectedGift={
+        nominal:item[0],
+        finalPrice:finalPrice,
+        oldPrice:oldPrice
+    };
+
+    document
+        .getElementById("giftOldPrice")
+        .textContent =
+        formatPrice(oldPrice);
+
+    document
+        .getElementById("giftFinalPrice")
+        .textContent =
+        formatPrice(finalPrice);
+
+    document
+        .getElementById("giftResult")
+        .style.display="block";
+
+}
+
+
+function buySelectedGift(){
+
+    if(!selectedGift){
+        return;
+    }
+
+    hideScreens();
+
+    document
+        .getElementById("orderScreen")
+        .classList.add("active");
+
+    document
+        .getElementById("orderImage")
+        .textContent="🎁";
+
+    document
+        .getElementById("orderTitle")
+        .textContent =
+        "🎁 Подарочная карта";
+
+    document
+        .getElementById("orderDescription")
+        .textContent =
+        currentGiftRegion+
+        " • "+
+        selectedGift.nominal+
+        " • "+
+        formatPrice(selectedGift.finalPrice);
+
+}
+
+
+/* ==========================================
+   CASES
+========================================== */
+
+function openCase(name,price){
+
+    const modal =
+        document.getElementById("caseModal");
+
+    const big =
+        document.getElementById("caseBig");
+
+    const result =
+        document.getElementById("resultPrize");
+
+    document
+        .getElementById("caseModalTitle")
+        .textContent =
+        "🎁 "+name+" кейс";
+
+    document
+        .getElementById("caseOpeningText")
+        .style.display="block";
+
+    document
+        .getElementById("caseOpeningText")
+        .textContent =
+        "Открываем кейс...";
+
+    result.classList.remove("active");
+
+    big.style.display="block";
+
+    big.classList.add("case-opening");
+
+    modal.classList.add("active");
+
+
+    setTimeout(()=>{
+
+        big.classList.remove("case-opening");
+
+        big.style.display="none";
+
+        document
+            .getElementById("caseOpeningText")
+            .style.display="none";
+
+        showPrize();
+
+    },1800);
+
+}
+
+
+function showPrize(){
+
+    const prizes=[
+
+        {
+            icon:"🎮",
+            name:"PlayStation Gift Card",
+            rarity:"Обычный приз"
+        },
+
+        {
+            icon:"⭐",
+            name:"PS Plus",
+            rarity:"Редкий приз"
+        },
+
+        {
+            icon:"💎",
+            name:"Premium Reward",
+            rarity:"Очень редкий приз"
+        },
+
+        {
+            icon:"👑",
+            name:"Legendary Reward",
+            rarity:"Легендарный приз"
+        }
+
+    ];
+
+    const prize =
+        prizes[
+            Math.floor(
+                Math.random()*prizes.length
+            )
+        ];
+
+    document
+        .getElementById("prizeIcon")
+        .textContent=prize.icon;
+
+    document
+        .getElementById("prizeName")
+        .textContent=prize.name;
+
+    document
+        .getElementById("prizeRarity")
+        .textContent=prize.rarity;
+
+    document
+        .getElementById("resultPrize")
+        .classList.add("active");
+
+}
+
+
+function closeCase(){
+
+    document
+        .getElementById("caseModal")
+        .classList.remove("active");
+
+}
+
+
+/* ==========================================
+   SUPPORT
+========================================== */
+
+function sendSupport(){
+
+    const textarea =
+        document
+            .getElementById("supportMessage");
+
+    const message =
+        textarea.value.trim();
+
+    if(!message){
+
+        textarea.focus();
+
+        return;
+
+    }
+
+    document
+        .getElementById("supportStatus")
+        .style.display="block";
+
+    textarea.value="";
+
+}
+
+
+/* ==========================================
+   INFO
+========================================== */
+
+function openInfo(type){
+
+    const modal =
+        document.getElementById("modal");
+
+    if(type==="plus"){
+
+        document
+            .getElementById("modalTitle")
+            .textContent =
+            "Зачем нужен PS Plus?";
+
+        document
+            .getElementById("modalText")
+            .innerHTML = `
+
+            <b>Essential</b><br>
+            Онлайн-игра и ежемесячные игры.
+
+            <br><br>
+
+            <b>Extra</b><br>
+            Essential плюс каталог игр.
+
+            <br><br>
+
+            <b>Deluxe</b><br>
+            Дополнительные возможности
+            и классические игры.
+
+            <br><br>
+
+            <span style="color:#ffd34e">
+            ⚠️ Важно
+            </span><br>
+
+            Регион подписки должен
+            соответствовать региону аккаунта.
+
+        `;
+
+    }else{
+
+        document
+            .getElementById("modalTitle")
+            .textContent =
+            "Подарочная карта";
+
+        document
+            .getElementById("modalText")
+            .innerHTML = `
+
+            Подарочная карта PlayStation Store
+            позволяет пополнить баланс магазина
+            и использовать средства для покупок.
+
+            <br><br>
+
+            <span style="color:#ffd34e">
+            ⚠️ Важно
+            </span><br>
+
+            Регион карты должен соответствовать
+            региону PlayStation аккаунта.
+
+        `;
+
+    }
+
+    modal.classList.add("active");
+
+}
+
+
+function closeInfo(){
+
+    document
+        .getElementById("modal")
+        .classList.remove("active");
+
+}
+
+
+/* ==========================================
+   PRICE
+========================================== */
+
+function formatPrice(price){
+
+    return Number(price)
+        .toLocaleString("ru-RU")
+        +" ₽";
+
+}
+
+
+/* ==========================================
+   ORDER
+========================================== */
+
+function confirmOrder(){
+
+    alert(
+        "Система оплаты ещё не подключена."
+    );
+
+}
+
+
+/* ==========================================
+   MODAL CLOSE BY BACKDROP
+========================================== */
+
+document
+    .getElementById("modal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(event.target===this){
+
+                closeInfo();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("caseModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(event.target===this){
+
+                closeCase();
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
